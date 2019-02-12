@@ -21,5 +21,4 @@ public class AppBootstrap {
         WebEntryPoint webEntryPoint = injector.getInstance(WebEntryPoint.class);
         webEntryPoint.boot(args);
     }
-
 }

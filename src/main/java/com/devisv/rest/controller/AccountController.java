@@ -2,6 +2,7 @@ package com.devisv.rest.controller;
 
 import com.devisv.rest.Routing;
 import com.devisv.rest.api.AccountApi;
+import com.devisv.rest.dto.AccountRequestDto;
 import com.google.inject.Injector;
 import io.javalin.Context;
 import io.javalin.Javalin;
@@ -41,6 +42,20 @@ public class AccountController extends Routing<AccountController> {
     }
 
     /**
+     * Create new Transfer
+     *
+     * @param context
+     */
+    public void post(Context context) {
+
+        AccountRequestDto requestDto = context.bodyAsClass(AccountRequestDto.class);
+
+        context.json(
+                api.create(requestDto)
+        );
+    }
+
+    /**
      * Get all Accounts
      *
      * @param context
@@ -54,7 +69,8 @@ public class AccountController extends Routing<AccountController> {
     @Override
     public void bindRoutes() {
         javalin.get("api/accounts/:uuid", ctx -> getController().get(ctx))
-               .get("api/accounts", ctx -> getController().getAll(ctx));
+               .get("api/accounts", ctx -> getController().getAll(ctx))
+               .post("api/accounts", ctx -> getController().post(ctx));
     }
 
 }

@@ -35,8 +35,18 @@ public class WebEntryPoint {
     }
 
     public void boot(String[] args) {
-        app.start(config.getServerPort());
+        int port = config.getServerPort();
+
+        if (args.length > 0) {
+            port = Integer.parseInt(args[0]);
+        }
+
+        app.start(port);
 
         routes.forEach(r -> r.bindRoutes());
+    }
+
+    public void stop() {
+        app.stop();
     }
 }

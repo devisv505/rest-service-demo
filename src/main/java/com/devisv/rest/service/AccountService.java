@@ -32,4 +32,8 @@ public class AccountService extends AbstractService<Account> {
 
         repository.update(account);
     }
+
+    public Account create(Account account) {
+        return repository.create(account);
+    }
 }

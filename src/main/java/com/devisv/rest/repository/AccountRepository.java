@@ -11,7 +11,6 @@ import javax.inject.Singleton;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -25,6 +24,12 @@ public class AccountRepository implements Repository<Account> {
     private static final String SELECT_FROM_ACCOUNTS_WHERE_UUID = "select * from accounts a where a.uuid = ?";
 
     private static final String SELECT_FROM_ACCOUNTS = "select * from accounts";
+
+    private static final String INSERT_INTO_ACCOUNTS =
+            "insert into accounts "
+                    + "(uuid, balance, description, currency) "
+                    + "values "
+                    + "(?, ?, ?, ?)";
 
     private static final String UPDATE_ACCOUNT =
             "update accounts "
@@ -107,5 +112,25 @@ public class AccountRepository implements Repository<Account> {
 
         return account;
 
+    }
+
+    public Account create(Account account) {
+        try {
+            final Long id =
+                    jdbcTemplate.execute(
+                            INSERT_INTO_ACCOUNTS,
+                            new Object[] {account.getUuid(), account.getBalance(),
+                                    account.getDescription(), account.getCurrency()}
+                    );
+
+            account.setId(id);
+
+            return account;
+
+        } catch (SQLException e) {
+            LOGGER.error(e.getLocalizedMessage(), e);
+        }
+
+        return null;
     }
 }
