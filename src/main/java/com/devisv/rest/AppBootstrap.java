@@ -1,10 +1,12 @@
 package com.devisv.rest;
 
-import com.devisv.rest.server.WebEntryPoint;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.flywaydb.core.Flyway;
 
+/**
+ * Main Class
+ */
 public class AppBootstrap {
 
     public static void main(String[] args) {
@@ -18,7 +20,6 @@ public class AppBootstrap {
         // Initialisation Web Server
         WebEntryPoint webEntryPoint = injector.getInstance(WebEntryPoint.class);
         webEntryPoint.boot(args);
-
     }
 
 }

@@ -1,4 +1,4 @@
-package com.devisv.rest.config;
+package com.devisv.rest;
 
 import javax.inject.Singleton;
 import java.io.IOException;
